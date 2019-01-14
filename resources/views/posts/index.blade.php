@@ -46,6 +46,15 @@
                     {{ $post->category->category_name }}
                 </a>
             </h5>
+
+            <h5 class="card-title">
+                Tag:
+                @foreach($post->tags as $tag)
+                    <a href="{{ route('posts.index', ['tag_name' => $tag->tag_name]) }}">
+                        #{{ $tag->tag_name }}
+                    </a>
+                @endforeach
+            </h5>
             <h5 class="card-title">
                 投稿者:
                 <a href="{{ route('users.show', $post->user_id) }}">{{ $post->user->name }}</a>
@@ -59,6 +68,9 @@
 
 @if(isset($category_id))
     {{ $posts->appends(['category_id' => $category_id])->links() }}
+
+@elseif(isset($tag_name))
+    {{ $posts->appends(['tag_name' => $tag_name])->links() }}
 
 @elseif(isset($search_query))
     {{ $posts->appends(['search' => $search_query])->links() }}
